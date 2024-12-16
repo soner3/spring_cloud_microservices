@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: recommendation
+  threads:
+    virtual:
+      enabled: true
+  main:
+    keep-alive: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    connection-timeout: 10s
+server:
+  port: 7002
