@@ -1,0 +1,76 @@
+services:
+  rabbitmq:
+    image: rabbitmq:4.0-management
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    extends:
+      file: ./parent-config.yml
+      service: network-service
+
+  product:
+    image: soner9/product:v1
+    container_name: product
+    ports:
+      - 7001:7001
+    environment:
+      - SPRING_APPLICATION_NAME=product
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    extends:
+      file: ./parent-config.yml
+      service: base-config-service
+
+  recommendation:
+    image: soner9/recommendation:v1
+    container_name: recommendation
+    ports:
+      - 7002:7002
+    environment:
+      - SPRING_APPLICATION_NAME=recommendation
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    extends:
+      file: ./parent-config.yml
+      service: base-config-service
+
+  review:
+    image: soner9/review:v1
+    container_name: review
+    ports:
+      - 7003:7003
+    environment:
+      - SPRING_APPLICATION_NAME=review
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    extends:
+      file: ./parent-config.yml
+      service: base-config-service
+
+  product-aggregator:
+    image: soner9/product-aggregator:v1
+    container_name: product-aggregator
+    ports:
+      - 7000:7000
+    environment:
+      - SPRING_APPLICATION_NAME=product-aggregator
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    extends:
+      file: ./parent-config.yml
+      service: base-config-service
+
+networks:
+  sonerapp:
+    driver: bridge

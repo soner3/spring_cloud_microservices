@@ -1,0 +1,15 @@
+services:
+  network-service:
+    networks:
+      - sonerapp
+
+  base-config-service:
+    extends:
+      service: network-service
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_RABBITMQ_HOST=rabbitmq
