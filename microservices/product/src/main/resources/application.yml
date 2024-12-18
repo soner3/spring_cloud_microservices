@@ -7,5 +7,19 @@ spring:
     username: guest
     password: guest
     connection-timeout: 10s
+  data:
+    mongodb:
+      username: root
+      password: example
+      host: localhost
+      port: 27017
+      database: products
+      authentication-database: admin
+springdoc:
+  swagger-ui:
+    url: /openapi/swagger-ui.html
+  api-docs:
+    path: /openapi/v3/api-docs
+
 server:
   port: 7001
