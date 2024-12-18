@@ -1,11 +1,6 @@
 spring:
   application:
     name: product-aggregator
-  threads:
-    virtual:
-      enabled: true
-  main:
-    keep-alive: true
   rabbitmq:
     host: localhost
     port: 5672
