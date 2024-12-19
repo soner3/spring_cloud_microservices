@@ -3,7 +3,37 @@ services:
     networks:
       - sonerapp
 
-  base-config-service:
+  mongo-config-service:
+    extends:
+      service: network-service
+    image: mongo:8
+    restart: always
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 10s
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  mysql-config-service:
+    extends:
+      service: network-service
+    image: mysql:8.0.40-bookworm
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 10s
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+
+  microservice-config-service:
     extends:
       service: network-service
     deploy:
