@@ -13,7 +13,7 @@ spring:
       password: example
       host: localhost
       port: 27017
-      database: products
+      database: productdb
       authentication-database: admin
 springdoc:
   swagger-ui:

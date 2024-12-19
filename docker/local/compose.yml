@@ -10,7 +10,7 @@ services:
       RABBITMQ_DEFAULT_PASS: guest
 
   product-mongo:
-    container_name: product-mongo-db
+    container_name: productdb
     image: mongo:8
     restart: always
     ports:
@@ -20,7 +20,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
 
   recommendation-mongo:
-    container_name: recommendation-mongo-db
+    container_name: recommendationdb
     image: mongo:8
     restart: always
     ports:
@@ -30,7 +30,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
 
   review-mysql:
-    container_name: review-mysql-db
+    container_name: reviewdb
     image: mysql:8.0.40-bookworm
     ports:
       - 3306:3306

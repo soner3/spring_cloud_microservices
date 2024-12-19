@@ -13,7 +13,7 @@ spring:
       password: example
       host: localhost
       port: 27018
-      database: recommendation-db
+      database: recommendationdb
       authentication-database: admin
 
 springdoc:
