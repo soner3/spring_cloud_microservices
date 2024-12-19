@@ -15,50 +15,87 @@ services:
       file: ./parent-config.yml
       service: network-service
 
+  mongo-product:
+    container_name: productdb
+    ports:
+      - 27017:27017
+    extends:
+      file: ./parent-config.yml
+      service: mongo-config-service
+
+  mongo-recommendation:
+    container_name: recommendationdb
+    ports:
+      - 27018:27017
+    extends:
+      file: ./parent-config.yml
+      service: mongo-config-service
+
+  mysql-review:
+    container_name: reviewdb
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=reviewdb
+    extends:
+      file: ./parent-config.yml
+      service: mysql-config-service
+
   product:
-    image: soner9/product:v1
+    image: soner9/product:v2
     container_name: product
     ports:
       - 7001:7001
     environment:
       - SPRING_APPLICATION_NAME=product
+      - SPRING_DATA_MONGODB_HOST=mongo-product
+      - SPRING_DATA_MONGODB_PORT=27017
     depends_on:
       rabbitmq:
         condition: service_healthy
+      mongo-product:
+        condition: service_healthy
     extends:
       file: ./parent-config.yml
-      service: base-config-service
+      service: microservice-config-service
 
   recommendation:
-    image: soner9/recommendation:v1
+    image: soner9/recommendation:v2
     container_name: recommendation
     ports:
       - 7002:7002
     environment:
       - SPRING_APPLICATION_NAME=recommendation
+      - SPRING_DATA_MONGODB_HOST=mongo-recommendation
+      - SPRING_DATA_MONGODB_PORT=27017
     depends_on:
       rabbitmq:
         condition: service_healthy
+      mongo-recommendation:
+        condition: service_healthy
     extends:
       file: ./parent-config.yml
-      service: base-config-service
+      service: microservice-config-service
 
   review:
-    image: soner9/review:v1
+    image: soner9/review:v2
     container_name: review
     ports:
       - 7003:7003
     environment:
       - SPRING_APPLICATION_NAME=review
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-review/reviewdb
     depends_on:
       rabbitmq:
         condition: service_healthy
+      mysql-review:
+        condition: service_healthy
     extends:
       file: ./parent-config.yml
-      service: base-config-service
+      service: microservice-config-service
 
   product-aggregator:
-    image: soner9/product-aggregator:v1
+    image: soner9/product-aggregator:v2
     container_name: product-aggregator
     ports:
       - 7000:7000
@@ -69,8 +106,7 @@ services:
         condition: service_healthy
     extends:
       file: ./parent-config.yml
-      service: base-config-service
-
+      service: microservice-config-service
 networks:
   sonerapp:
     driver: bridge
