@@ -19,6 +19,8 @@ services:
     container_name: productdb
     ports:
       - 27017:27017
+    volumes:
+      - ./../../data/mongo-productdb:/data/db
     extends:
       file: ./parent-config.yml
       service: mongo-config-service
@@ -27,6 +29,8 @@ services:
     container_name: recommendationdb
     ports:
       - 27018:27017
+    volumes:
+      - ./../../data/mongo-recommendationdb:/data/db
     extends:
       file: ./parent-config.yml
       service: mongo-config-service
@@ -37,6 +41,8 @@ services:
       - 3306:3306
     environment:
       - MYSQL_DATABASE=reviewdb
+    volumes:
+      - ./../../data/mysql-reviewdb:/var/lib/mysql
     extends:
       file: ./parent-config.yml
       service: mysql-config-service
