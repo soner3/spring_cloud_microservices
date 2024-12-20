@@ -27,13 +27,13 @@ import lombok.NoArgsConstructor;
 public class Review {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(unique = true, updatable = false)
-    private int reviewId;
+    private UUID reviewId;
 
-    private int productId;
+    private UUID productId;
 
     private String author;
 
@@ -57,12 +57,12 @@ public class Review {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    public Review(int reviewId, int productId, String author, String subject, String content) {
-        this.reviewId = reviewId;
+    public Review(UUID productId, String author, String subject, String content) {
         this.productId = productId;
         this.author = author;
         this.subject = subject;
         this.content = content;
+        this.reviewId = UUID.randomUUID();
     }
 
 }
