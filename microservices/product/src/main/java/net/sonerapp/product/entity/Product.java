@@ -1,6 +1,7 @@
 package net.sonerapp.product.entity;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedBy;
@@ -23,11 +24,13 @@ public class Product {
     private ObjectId id;
 
     @Indexed(unique = true)
-    private int productId;
+    private UUID productId;
 
     private String name;
 
     private int weight;
+
+    private double price;
 
     @CreatedBy
     private String createdBy;
@@ -41,10 +44,12 @@ public class Product {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public Product(int productId, String name, int weight) {
-        this.productId = productId;
+    public Product(String name, int weight, double price) {
+        this.productId = UUID.randomUUID();
         this.name = name;
         this.weight = weight;
+        this.price = price;
+
     }
 
 }

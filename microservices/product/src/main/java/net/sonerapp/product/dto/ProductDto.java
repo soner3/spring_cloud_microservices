@@ -1,5 +1,8 @@
 package net.sonerapp.product.dto;
 
-public record ProductDto(int productId, String name, int weight) {
-
+public record ProductDto(
+                String productId,
+                String name,
+                int weight,
+                double price) {
 }

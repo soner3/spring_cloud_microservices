@@ -17,7 +17,7 @@ spring:
       authentication-database: admin
 springdoc:
   swagger-ui:
-    url: /openapi/swagger-ui.html
+    path: /openapi/swagger-ui.html
   api-docs:
     path: /openapi/v3/api-docs
 

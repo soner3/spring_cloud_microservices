@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
 
-import net.sonerapp.product.entity.Product;
-import net.sonerapp.product.repository.ProductRepository;
+import net.sonerapp.product.dto.CreateProductDto;
+import net.sonerapp.product.service.ProductService;
 
 @SpringBootApplication
 @EnableMongoAuditing
@@ -18,11 +18,9 @@ public class ProductApplication {
 	}
 
 	@Bean
-	CommandLineRunner initData(ProductRepository productRepository) {
+	CommandLineRunner initData(ProductService productService) {
 		return args -> {
-			if (!productRepository.existsByProductId(3)) {
-				productRepository.save(new Product(3, "Product-" + 3, 123));
-			}
+			productService.createProduct(new CreateProductDto("Product-" + 3, 123, 3.99));
 		};
 	}
 
