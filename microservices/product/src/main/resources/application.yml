@@ -15,6 +15,7 @@ spring:
       port: 27017
       database: productdb
       authentication-database: admin
+
 springdoc:
   swagger-ui:
     path: /openapi/swagger-ui.html

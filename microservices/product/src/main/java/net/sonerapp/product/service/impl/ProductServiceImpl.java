@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
-import net.sonerapp.product.dto.CreateProductDto;
+import net.sonerapp.product.dto.ModifyProductDto;
 import net.sonerapp.product.dto.ProductDto;
 import net.sonerapp.product.entity.Product;
 import net.sonerapp.product.exception.NotFoundException;
@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDto getProduct(UUID productId) {
         Product product = productRepository.findByProductId(productId)
-                .orElseThrow(() -> new NotFoundException("No product found for product-id: " + productId));
+                .orElseThrow(() -> new NotFoundException("No product found for id: " + productId.toString()));
         return conversionService.convert(product, ProductDto.class);
     }
 
@@ -39,13 +39,34 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto createProduct(CreateProductDto createProductDto) {
-        Product product = new Product(createProductDto.name(), createProductDto.weight(), createProductDto.price());
+    public ProductDto createProduct(ModifyProductDto modifyProductDto) {
+        Product product = new Product(modifyProductDto.name(), modifyProductDto.weight(), modifyProductDto.price());
         while (productRepository.existsByProductId(product.getProductId())) {
             product.setProductId(UUID.randomUUID());
         }
         Product savedProduct = productRepository.save(product);
         return conversionService.convert(savedProduct, ProductDto.class);
+    }
+
+    @Override
+    public void deleteProduct(UUID productId) {
+        int deletedEntityCount = productRepository.deleteByProductId(productId);
+        if (deletedEntityCount < 1) {
+            throw new NotFoundException("No product found for id: " + productId.toString());
+        }
+    }
+
+    @Override
+    public ProductDto updateProduct(ModifyProductDto modifyProductDto, UUID productId) {
+        Product product = productRepository.findByProductId(productId)
+                .orElseThrow(() -> new NotFoundException("No product found for id: " + productId.toString()));
+        product.setName(modifyProductDto.name());
+        product.setWeight(modifyProductDto.weight());
+        product.setPrice(modifyProductDto.price());
+
+        Product updatedProduct = productRepository.save(product);
+
+        return conversionService.convert(updatedProduct, ProductDto.class);
     }
 
 }

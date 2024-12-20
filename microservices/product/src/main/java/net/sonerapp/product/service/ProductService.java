@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Pageable;
 
-import net.sonerapp.product.dto.CreateProductDto;
+import net.sonerapp.product.dto.ModifyProductDto;
 import net.sonerapp.product.dto.ProductDto;
 
 public interface ProductService {
@@ -14,5 +14,9 @@ public interface ProductService {
 
     List<ProductDto> getProductPage(Pageable pageable);
 
-    ProductDto createProduct(CreateProductDto createProductDto);
+    ProductDto createProduct(ModifyProductDto modifyProductDto);
+
+    ProductDto updateProduct(ModifyProductDto modifyProductDto, UUID productId);
+
+    void deleteProduct(UUID productId);
 }

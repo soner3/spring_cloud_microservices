@@ -189,7 +189,7 @@
 						</exclude>
 					</excludes>
 					<image>
-						<name>soner9/${project.artifactId}:v2</name>
+						<name>soner9/${project.artifactId}:v3</name>
 					</image>
 				</configuration>
 			</plugin>
