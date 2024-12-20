@@ -1,6 +1,7 @@
 package net.sonerapp.recommendation.entity;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedBy;
@@ -23,9 +24,9 @@ public class Recommendation {
     private ObjectId id;
 
     @Indexed(unique = true)
-    private int recommendationId;
+    private UUID recommendationId;
 
-    private int productId;
+    private UUID productId;
 
     private String author;
 
@@ -45,8 +46,8 @@ public class Recommendation {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public Recommendation(int recommendationId, int productId, String author, int rate, String content) {
-        this.recommendationId = recommendationId;
+    public Recommendation(UUID productId, String author, int rate, String content) {
+        this.recommendationId = UUID.randomUUID();
         this.productId = productId;
         this.author = author;
         this.rate = rate;

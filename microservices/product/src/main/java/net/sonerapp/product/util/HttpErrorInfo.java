@@ -26,9 +26,11 @@ public class HttpErrorInfo {
         Map<String, Object> errors = new HashMap<>();
 
         exception.getAllErrors().forEach(error -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
+            if (error instanceof FieldError) {
+                String fieldName = ((FieldError) error).getField();
+                String errorMessage = error.getDefaultMessage();
+                errors.put(fieldName, errorMessage);
+            }
         });
 
         ProblemDetail problemDetail = ProblemDetail.forStatus(status);

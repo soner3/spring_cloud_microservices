@@ -1,5 +1,7 @@
 package net.sonerapp.recommendation.dto;
 
-public record RecommendationDto(int recommendationId, int productId, String author, int rate, String content) {
+import java.util.UUID;
+
+public record RecommendationDto(UUID recommendationId, UUID productId, String author, int rate, String content) {
 
 }
