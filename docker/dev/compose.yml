@@ -56,14 +56,19 @@ services:
       - SPRING_APPLICATION_NAME=product
       - SPRING_DATA_MONGODB_HOST=mongo-product
       - SPRING_DATA_MONGODB_PORT=27017
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       rabbitmq:
         condition: service_healthy
       mongo-product:
         condition: service_healthy
-    extends:
-      file: ./parent-config.yml
-      service: microservice-config-service
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - sonerapp
 
   recommendation:
     image: soner9/recommendation:v4
@@ -74,14 +79,19 @@ services:
       - SPRING_APPLICATION_NAME=recommendation
       - SPRING_DATA_MONGODB_HOST=mongo-recommendation
       - SPRING_DATA_MONGODB_PORT=27017
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       rabbitmq:
         condition: service_healthy
       mongo-recommendation:
         condition: service_healthy
-    extends:
-      file: ./parent-config.yml
-      service: microservice-config-service
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - sonerapp
 
   review:
     image: soner9/review:v4
@@ -91,14 +101,19 @@ services:
     environment:
       - SPRING_APPLICATION_NAME=review
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-review/reviewdb
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       rabbitmq:
         condition: service_healthy
       mysql-review:
         condition: service_healthy
-    extends:
-      file: ./parent-config.yml
-      service: microservice-config-service
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - sonerapp
 
   product-aggregator:
     image: soner9/product-aggregator:v4
@@ -107,12 +122,18 @@ services:
       - 7000:7000
     environment:
       - SPRING_APPLICATION_NAME=product-aggregator
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       rabbitmq:
         condition: service_healthy
-    extends:
-      file: ./parent-config.yml
-      service: microservice-config-service
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - sonerapp
+
 networks:
   sonerapp:
     driver: bridge
