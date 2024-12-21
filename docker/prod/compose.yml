@@ -48,7 +48,7 @@ services:
       service: mysql-config-service
 
   product:
-    image: soner9/product:v3
+    image: soner9/product:v4
     container_name: product
     ports:
       - 7001:7001
@@ -66,7 +66,7 @@ services:
       service: microservice-config-service
 
   recommendation:
-    image: soner9/recommendation:v3
+    image: soner9/recommendation:v4
     container_name: recommendation
     ports:
       - 7002:7002
@@ -84,7 +84,7 @@ services:
       service: microservice-config-service
 
   review:
-    image: soner9/review:v3
+    image: soner9/review:v4
     container_name: review
     ports:
       - 7003:7003
@@ -101,7 +101,7 @@ services:
       service: microservice-config-service
 
   product-aggregator:
-    image: soner9/product-aggregator:v3
+    image: soner9/product-aggregator:v4
     container_name: product-aggregator
     ports:
       - 7000:7000
