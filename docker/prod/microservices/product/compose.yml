@@ -1,0 +1,43 @@
+services:
+  mongo-product:
+    container_name: productdb
+    image: mongo:8
+    restart: always
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 10s
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
+    volumes:
+      - ./../../../../data/mongo-productdb:/data/db
+    networks:
+      - sonerapp
+
+  product:
+    image: soner9/product:v4
+    container_name: product
+    ports:
+      - 7001:7001
+    environment:
+      - SPRING_APPLICATION_NAME=product
+      - SPRING_DATA_MONGODB_HOST=mongo-product
+      - SPRING_DATA_MONGODB_PORT=27017
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      mongo-product:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - sonerapp

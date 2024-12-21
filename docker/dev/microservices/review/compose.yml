@@ -1,0 +1,43 @@
+services:
+  mysql-review:
+    container_name: reviewdb
+    image: mysql:8.0.40-bookworm
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 20s
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=reviewdb
+    ports:
+      - 3306:3306
+    volumes:
+      - ./../../../../data/mysql-reviewdb:/var/lib/mysql
+    networks:
+      - sonerapp
+
+  review:
+    image: soner9/review:v4
+    container_name: review
+    ports:
+      - 7003:7003
+    environment:
+      - SPRING_APPLICATION_NAME=review
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-review/reviewdb
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      mysql-review:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - sonerapp
