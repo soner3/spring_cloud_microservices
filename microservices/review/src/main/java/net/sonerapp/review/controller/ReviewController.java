@@ -33,6 +33,6 @@ public interface ReviewController {
             @PathVariable UUID reviewId);
 
     @DeleteMapping("/review/{reviewId}")
-    public ResponseEntity<ReviewDto> deleteReview(@PathVariable UUID reviewId);
+    public ResponseEntity<Void> deleteReview(@PathVariable UUID reviewId);
 
 }

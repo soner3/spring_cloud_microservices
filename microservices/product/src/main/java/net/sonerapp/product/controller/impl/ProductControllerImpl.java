@@ -63,6 +63,7 @@ public class ProductControllerImpl implements ProductController {
     @Override
     @Operation(summary = "Delete a product by ID", description = "Remove a product from the catalog using its unique identifier.", responses = {
             @ApiResponse(responseCode = "204", description = "Successfully deleted the product."),
+            @ApiResponse(responseCode = "403", description = "Invalid UUID format in the path variable.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))),
             @ApiResponse(responseCode = "404", description = "Product with the specified ID not found.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
     })
     public ResponseEntity<Void> deleteProduct(UUID productId) {
@@ -72,8 +73,9 @@ public class ProductControllerImpl implements ProductController {
 
     @Override
     @Operation(summary = "Update an existing product", description = "Modify the details of an existing product using its unique identifier.", responses = {
-            @ApiResponse(responseCode = "200", description = "Successfully updated the product.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductDto.class))),
+            @ApiResponse(responseCode = "200", description = "Successfully updated the product.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),
             @ApiResponse(responseCode = "400", description = "Validation failed for the input data.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "403", description = "Invalid UUID format in the path variable.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))),
             @ApiResponse(responseCode = "404", description = "Product with the specified ID not found.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
     })
     public ResponseEntity<ProductDto> updateProduct(@Valid ModifyProductDto modifyProductDto, UUID productId) {
