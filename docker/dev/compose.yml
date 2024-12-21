@@ -11,41 +11,69 @@ services:
       timeout: 5s
       retries: 10
       start_period: 5s
-    extends:
-      file: ./parent-config.yml
-      service: network-service
+    networks:
+      - sonerapp
 
   mongo-product:
     container_name: productdb
+    image: mongo:8
+    restart: always
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 10s
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
     ports:
       - 27017:27017
     volumes:
       - ./../../data/mongo-productdb:/data/db
-    extends:
-      file: ./parent-config.yml
-      service: mongo-config-service
+    networks:
+      - sonerapp
 
   mongo-recommendation:
     container_name: recommendationdb
+    image: mongo:8
+    restart: always
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 10s
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
     ports:
       - 27018:27017
     volumes:
       - ./../../data/mongo-recommendationdb:/data/db
-    extends:
-      file: ./parent-config.yml
-      service: mongo-config-service
+    networks:
+      - sonerapp
 
   mysql-review:
     container_name: reviewdb
+    image: mysql:8.0.40-bookworm
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 10s
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=reviewdb
     ports:
       - 3306:3306
-    environment:
-      - MYSQL_DATABASE=reviewdb
     volumes:
       - ./../../data/mysql-reviewdb:/var/lib/mysql
-    extends:
-      file: ./parent-config.yml
-      service: mysql-config-service
+    networks:
+      - sonerapp
 
   product:
     image: soner9/product:v4
