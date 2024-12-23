@@ -1,6 +1,6 @@
 services:
-  mongo-recommendation:
-    container_name: recommendationdb
+  mongo-product:
+    container_name: productdb
     image: mongo:8
     restart: always
     healthcheck:
@@ -13,25 +13,27 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     ports:
-      - 27018:27017
+      - 27017:27017
     volumes:
-      - ./../../../../data/mongo-recommendationdb:/data/db
+      - ./../../../../data/mongo-productdb:/data/db
     networks:
       - sonerapp
 
-  recommendation:
-    image: soner9/recommendation:v4
-    container_name: recommendation
+  product:
+    image: soner9/product:v4
+    container_name: product
     ports:
-      - 7002:7002
+      - 7001:7001
     environment:
-      - SPRING_APPLICATION_NAME=recommendation
-      - SPRING_DATA_MONGODB_HOST=mongo-recommendation
+      - SPRING_APPLICATION_NAME=product
+      - SPRING_DATA_MONGODB_HOST=mongo-product
       - SPRING_DATA_MONGODB_PORT=27017
+    env_file:
+      - ./../../global.env
     depends_on:
       rabbitmq:
         condition: service_healthy
-      mongo-recommendation:
+      mongo-product:
         condition: service_healthy
     deploy:
       resources:
