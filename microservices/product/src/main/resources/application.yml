@@ -4,6 +4,26 @@ spring:
   config:
     import:
       - optional:configserver:http://localhost:7071
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  data:
+    mongodb:
+      username: root
+      password: example
+      host: localhost
+      port: 27017
+      database: productdb
+      authentication-database: admin
+
+springdoc:
+  swagger-ui:
+    path: /openapi/swagger-ui.html
+  api-docs:
+    path: /openapi/v3/api-docs
+
 server:
   port: 7001
 

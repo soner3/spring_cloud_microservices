@@ -4,6 +4,25 @@ spring:
   config:
     import:
       - optional:configserver:http://localhost:7071
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/reviewdb
+    username: user
+    password: password
+
+springdoc:
+  swagger-ui:
+    path: /openapi/swagger-ui.html
+  api-docs:
+    path: /openapi/v3/api-docs
+
 server:
   port: 7003
 

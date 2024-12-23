@@ -28,8 +28,6 @@ services:
     environment:
       - SPRING_APPLICATION_NAME=review
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-review/reviewdb
-      - SPRING_PROFILES_ACTIVE=dev
-      - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       rabbitmq:
         condition: service_healthy

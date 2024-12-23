@@ -6,8 +6,6 @@ services:
       - 7000:7000
     environment:
       - SPRING_APPLICATION_NAME=product-aggregator
-      - SPRING_PROFILES_ACTIVE=dev
-      - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       rabbitmq:
         condition: service_healthy

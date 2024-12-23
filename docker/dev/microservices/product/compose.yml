@@ -28,8 +28,6 @@ services:
       - SPRING_APPLICATION_NAME=product
       - SPRING_DATA_MONGODB_HOST=mongo-product
       - SPRING_DATA_MONGODB_PORT=27017
-      - SPRING_PROFILES_ACTIVE=dev
-      - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       rabbitmq:
         condition: service_healthy

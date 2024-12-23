@@ -11,5 +11,7 @@ services:
       timeout: 5s
       retries: 10
       start_period: 5s
+    env_file:
+      - ./../global.env
     networks:
       - sonerapp
