@@ -6,3 +6,11 @@ spring:
       - optional:configserver:http://localhost:7071
 server:
   port: 7000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - busrefresh
+          - health

@@ -4,11 +4,9 @@ spring:
     port: 5672
     username: guest
     password: guest
-    connection-timeout: 10s
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
   datasource:
     url: jdbc:mysql://localhost:3306/reviewdb
     username: user
