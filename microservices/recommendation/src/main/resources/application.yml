@@ -1,25 +1,8 @@
 spring:
   application:
     name: recommendation
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-    connection-timeout: 10s
-  data:
-    mongodb:
-      username: root
-      password: example
-      host: localhost
-      port: 27018
-      database: recommendationdb
-      authentication-database: admin
-
-springdoc:
-  swagger-ui:
-    path: /openapi/swagger-ui.html
-  api-docs:
-    path: /openapi/v3/api-docs
+  config:
+    import:
+      - optional:configserver:http://localhost:7071
 server:
   port: 7002
