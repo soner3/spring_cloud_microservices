@@ -197,9 +197,6 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
-					<image>
-						<name>soner9/${project.artifactId}:v5</name>
-					</image>
 				</configuration>
 			</plugin>
 		</plugins>

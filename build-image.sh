@@ -4,13 +4,15 @@ BASE_DIR=$(pwd)
 
 services=("product" "product-aggregator" "recommendation" "review")
 
+version=v5
+
 infrastructureServices=("configserver")
 
 for service in "${services[@]}"; do
     (
         echo "Building docker images: $service" || exit;
         cd "$BASE_DIR/microservices/$service";
-        ./mvnw clean package spring-boot:build-image || exit;
+        docker build -t "soner9/$service:$version" . || exit;
         echo "Finished building $service";
     ) &
 
@@ -20,7 +22,7 @@ for infrastructureService in "${infrastructureServices[@]}"; do
     (
         echo "Building docker images: $infrastructureService" || exit;
         cd "$BASE_DIR/$infrastructureService";
-        ./mvnw clean package spring-boot:build-image || exit;
+        docker build -t "soner9/$infrastructureService:$version" . || exit;
         echo "Finished building $infrastructureService";
     ) &
 done
