@@ -21,19 +21,20 @@ services:
       - sonerapp
 
   review:
-    image: soner9/review:v4
+    image: soner9/review:v5
     container_name: review
     ports:
       - 7003:7003
     environment:
       - SPRING_APPLICATION_NAME=review
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-review/reviewdb
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://configserver:7071
     env_file:
       - ./../../global.env
     depends_on:
-      rabbitmq:
-        condition: service_healthy
       mysql-review:
+        condition: service_healthy
+      configserver:
         condition: service_healthy
     deploy:
       resources:

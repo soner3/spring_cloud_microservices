@@ -25,6 +25,15 @@ management:
       exposure:
         include:
           - health
+  health:
+    readinessstate:
+      enabled: true
+    livenessstate:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
 
 encrypt:
   key: PUA6cHajW72qbGZ3aiuZZipH0sBYYStY+oKGc9fn45MhK21ZhTQ2WyP1dZg=

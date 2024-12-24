@@ -1,15 +1,16 @@
 services:
   product-aggregator:
-    image: soner9/product-aggregator:v4
+    image: soner9/product-aggregator:v5
     container_name: product-aggregator
     ports:
       - 7000:7000
     environment:
       - SPRING_APPLICATION_NAME=product-aggregator
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://configserver:7071
     env_file:
       - ./../../global.env
     depends_on:
-      rabbitmq:
+      configserver:
         condition: service_healthy
     deploy:
       resources:

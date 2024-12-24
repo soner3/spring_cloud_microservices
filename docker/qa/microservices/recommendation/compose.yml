@@ -20,7 +20,7 @@ services:
       - sonerapp
 
   recommendation:
-    image: soner9/recommendation:v4
+    image: soner9/recommendation:v5
     container_name: recommendation
     ports:
       - 7002:7002
@@ -28,12 +28,13 @@ services:
       - SPRING_APPLICATION_NAME=recommendation
       - SPRING_DATA_MONGODB_HOST=mongo-recommendation
       - SPRING_DATA_MONGODB_PORT=27017
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://configserver:7071
     env_file:
       - ./../../global.env
     depends_on:
-      rabbitmq:
-        condition: service_healthy
       mongo-recommendation:
+        condition: service_healthy
+      configserver:
         condition: service_healthy
     deploy:
       resources:

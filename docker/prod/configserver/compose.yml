@@ -1,0 +1,25 @@
+services:
+  configserver:
+    container_name: configserver
+    image: soner9/configserver:v5
+    ports:
+      - 7071:7071
+    env_file:
+      - ./../global.env
+    environment:
+      - SPRING_PROFILES_ACTIVE=native
+    healthcheck:
+      test: "curl --fail --silent localhost:7071/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - sonerapp

@@ -20,7 +20,7 @@ services:
       - sonerapp
 
   product:
-    image: soner9/product:v4
+    image: soner9/product:v5
     container_name: product
     ports:
       - 7001:7001
@@ -28,12 +28,13 @@ services:
       - SPRING_APPLICATION_NAME=product
       - SPRING_DATA_MONGODB_HOST=mongo-product
       - SPRING_DATA_MONGODB_PORT=27017
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://configserver:7071
     env_file:
       - ./../../global.env
     depends_on:
-      rabbitmq:
-        condition: service_healthy
       mongo-product:
+        condition: service_healthy
+      configserver:
         condition: service_healthy
     deploy:
       resources:
