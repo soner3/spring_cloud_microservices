@@ -26,7 +26,7 @@ COPY --from=builder /builder/extracted/snapshot-dependencies/ ./
 COPY --from=builder /builder/extracted/application/ ./
 
 RUN groupadd --gid ${USER_GID} ${USERNAME} \
-    && useradd --uid ${USER_UID} --gid ${USER_GID} -m ${USERNAME} \
+    && useradd --uid ${USER_UID} --gid ${USER_GID} ${USERNAME} \
     && chown -R ${USER_UID}:${USER_GID} ${APP_DIR}
 
 USER ${USERNAME}

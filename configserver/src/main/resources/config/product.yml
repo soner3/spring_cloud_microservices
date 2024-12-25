@@ -1,0 +1,5 @@
+info:
+  app:
+    name: "Product Service"
+    description: "Product Service for Spring Cloud Microservices"
+    version: "1.0.0"

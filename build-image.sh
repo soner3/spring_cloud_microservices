@@ -4,9 +4,9 @@ BASE_DIR=$(pwd)
 
 services=("product" "product-aggregator" "recommendation" "review")
 
-version=v5
+version=v6
 
-infrastructureServices=("configserver")
+infrastructureServices=("configserver eurekaserver")
 
 for service in "${services[@]}"; do
     (
