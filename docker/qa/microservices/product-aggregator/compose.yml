@@ -1,16 +1,17 @@
 services:
   product-aggregator:
-    image: soner9/product-aggregator:v5
+    image: soner9/product-aggregator:v6
     container_name: product-aggregator
     ports:
       - 7000:7000
     environment:
       - SPRING_APPLICATION_NAME=product-aggregator
       - SPRING_CONFIG_IMPORT=optional:configserver:http://configserver:7071
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:7070/eureka/
     env_file:
       - ./../../global.env
     depends_on:
-      configserver:
+      eurekaserver:
         condition: service_healthy
     deploy:
       resources:

@@ -20,7 +20,7 @@ services:
       - sonerapp
 
   product:
-    image: soner9/product:v5
+    image: soner9/product:v6
     container_name: product
     ports:
       - 7001:7001
@@ -29,12 +29,13 @@ services:
       - SPRING_DATA_MONGODB_HOST=mongo-product
       - SPRING_DATA_MONGODB_PORT=27017
       - SPRING_CONFIG_IMPORT=optional:configserver:http://configserver:7071
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:7070/eureka/
     env_file:
       - ./../../global.env
     depends_on:
       mongo-product:
         condition: service_healthy
-      configserver:
+      eurekaserver:
         condition: service_healthy
     deploy:
       resources:

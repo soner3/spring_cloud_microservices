@@ -20,7 +20,7 @@ services:
       - sonerapp
 
   recommendation:
-    image: soner9/recommendation:v5
+    image: soner9/recommendation:v6
     container_name: recommendation
     ports:
       - 7002:7002
@@ -29,12 +29,13 @@ services:
       - SPRING_DATA_MONGODB_HOST=mongo-recommendation
       - SPRING_DATA_MONGODB_PORT=27017
       - SPRING_CONFIG_IMPORT=optional:configserver:http://configserver:7071
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:7070/eureka/
     env_file:
       - ./../../global.env
     depends_on:
       mongo-recommendation:
         condition: service_healthy
-      configserver:
+      eurekaserver:
         condition: service_healthy
     deploy:
       resources:

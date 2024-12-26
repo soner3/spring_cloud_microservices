@@ -1,0 +1,26 @@
+services:
+  eurekaserver:
+    image: soner9/eurekaserver:v6
+    container_name: eurekaserver
+    ports:
+      - 7070:7070
+    env_file:
+      - ./../global.env
+    healthcheck:
+      test: "curl --fail --silent localhost:7070/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    environment:
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://configserver:7071
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:7070/eureka/
+    depends_on:
+      configserver:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - sonerapp

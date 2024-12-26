@@ -21,7 +21,7 @@ services:
       - sonerapp
 
   review:
-    image: soner9/review:v5
+    image: soner9/review:v6
     container_name: review
     ports:
       - 7003:7003
@@ -29,12 +29,13 @@ services:
       - SPRING_APPLICATION_NAME=review
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-review/reviewdb
       - SPRING_CONFIG_IMPORT=optional:configserver:http://configserver:7071
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:7070/eureka/
     env_file:
       - ./../../global.env
     depends_on:
       mysql-review:
         condition: service_healthy
-      configserver:
+      eurekaserver:
         condition: service_healthy
     deploy:
       resources:

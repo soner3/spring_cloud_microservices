@@ -1,6 +1,7 @@
 include:
   - ./rabbitmq/compose.yml
   - ./configserver/compose.yml
+  - ./eurekaserver/compose.yml
   - ./microservices/product/compose.yml
   - ./microservices/product-aggregator/compose.yml
   - ./microservices/recommendation/compose.yml
