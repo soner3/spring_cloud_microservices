@@ -33,6 +33,8 @@ management:
         include:
           - busrefresh
           - health
+          - info
+          - shutdown
   health:
     readinessstate:
       enabled: true
@@ -42,3 +44,16 @@ management:
     health:
       probes:
         enabled: true
+    shutdown:
+      access: unrestricted
+  info:
+    env:
+      enabled: true
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:7070/eureka/

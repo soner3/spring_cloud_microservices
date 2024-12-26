@@ -1,0 +1,5 @@
+info:
+  app:
+    name: "Recommendation Service"
+    description: "Recommendation Service for Spring Cloud Microservices"
+    version: "1.0.0"

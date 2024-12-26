@@ -35,6 +35,7 @@ management:
           - busrefresh
           - health
           - info
+          - shutdown
   health:
     readinessstate:
       enabled: true

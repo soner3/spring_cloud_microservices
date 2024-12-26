@@ -1,0 +1,5 @@
+info:
+  app:
+    name: "Product-Aggregator Service"
+    description: "Product-Aggregator Service for Spring Cloud Microservices"
+    version: "1.0.0"

@@ -1,0 +1,5 @@
+info:
+  app:
+    name: "Review Service"
+    description: "Review Service for Spring Cloud Microservices"
+    version: "1.0.0"
