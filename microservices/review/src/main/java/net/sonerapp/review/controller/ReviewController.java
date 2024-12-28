@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import jakarta.validation.Valid;
 import net.sonerapp.review.dto.CreateReviewDto;
@@ -20,7 +21,8 @@ import net.sonerapp.review.dto.UpdateReviewDto;
 public interface ReviewController {
 
     @GetMapping("/review/{productId}")
-    public ResponseEntity<List<ReviewDto>> getProductReviews(@PathVariable UUID productId);
+    public ResponseEntity<List<ReviewDto>> getProductReviews(@PathVariable UUID productId,
+            @RequestHeader("sonerapp-correlation-id") String correlationId);
 
     @GetMapping("/review")
     public ResponseEntity<List<ReviewDto>> getReviewPage(Pageable pageable);

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import jakarta.validation.Valid;
 import net.sonerapp.product.dto.ModifyProductDto;
@@ -19,7 +20,8 @@ import net.sonerapp.product.dto.ProductDto;
 public interface ProductController {
 
     @GetMapping("/product/{productId}")
-    public ResponseEntity<ProductDto> getProduct(@PathVariable UUID productId);
+    public ResponseEntity<ProductDto> getProduct(@PathVariable UUID productId,
+            @RequestHeader("sonerapp-correlation-id") String correlationId);
 
     @GetMapping("/product")
     public ResponseEntity<List<ProductDto>> getProductPage(Pageable pageable);

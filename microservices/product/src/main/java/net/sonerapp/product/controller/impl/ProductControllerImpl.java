@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.sonerapp.product.controller.ProductController;
 import net.sonerapp.product.dto.ModifyProductDto;
 import net.sonerapp.product.dto.ProductDto;
@@ -26,6 +27,7 @@ import net.sonerapp.product.service.ProductService;
 @AllArgsConstructor
 @RequestMapping("/v1")
 @Tag(name = "Product API")
+@Slf4j
 public class ProductControllerImpl implements ProductController {
 
     private final ProductService productService;
@@ -36,7 +38,8 @@ public class ProductControllerImpl implements ProductController {
             @ApiResponse(responseCode = "403", description = "Invalid UUID format in the path variable.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))),
             @ApiResponse(responseCode = "404", description = "Product with the specified ID not found.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
     })
-    public ResponseEntity<ProductDto> getProduct(UUID productId) {
+    public ResponseEntity<ProductDto> getProduct(UUID productId, String correlationId) {
+        log.debug("Correlation-id found: {}", correlationId);
         ProductDto productDto = productService.getProduct(productId);
         return ResponseEntity.ok(productDto);
     }

@@ -25,11 +25,11 @@ public class ProductAggregatorServiceImpl implements ProductAggregatorService {
     private final ReviewService reviewService;
 
     @Override
-    public ProductAggregatorDto aggregateProduct(UUID productId) {
-        ResponseEntity<ProductDto> productResponse = productService.getProduct(productId);
+    public ProductAggregatorDto aggregateProduct(UUID productId, String correlationId) {
+        ResponseEntity<ProductDto> productResponse = productService.getProduct(productId, correlationId);
         ResponseEntity<List<RecommendationDto>> recommendationReponse = recommendationService
-                .getProductRecommendation(productId);
-        ResponseEntity<List<ReviewDto>> reviewResponse = reviewService.getProductReviews(productId);
+                .getProductRecommendation(productId, correlationId);
+        ResponseEntity<List<ReviewDto>> reviewResponse = reviewService.getProductReviews(productId, correlationId);
         return new ProductAggregatorDto(
                 productResponse.getBody(),
                 recommendationReponse.getBody(),

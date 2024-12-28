@@ -33,3 +33,7 @@ management:
         enabled: true
     gateway:
       access: read-only
+
+logging:
+  level:
+    "[org.springframework]": debug

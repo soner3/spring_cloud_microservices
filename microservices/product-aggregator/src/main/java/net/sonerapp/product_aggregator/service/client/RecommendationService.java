@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;
 
@@ -14,6 +15,7 @@ import net.sonerapp.product_aggregator.dto.recommendation.RecommendationDto;
 public interface RecommendationService {
 
     @GetExchange("/v1/recommendation/{productId}")
-    ResponseEntity<List<RecommendationDto>> getProductRecommendation(@PathVariable UUID productId);
+    ResponseEntity<List<RecommendationDto>> getProductRecommendation(@PathVariable UUID productId,
+            @RequestHeader("sonerapp-correlation-id") String correlationId);
 
 }
