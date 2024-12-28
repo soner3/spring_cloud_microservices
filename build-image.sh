@@ -6,7 +6,7 @@ services=("product" "product-aggregator" "recommendation" "review")
 
 version=v7
 
-infrastructureServices=("configserver" "eurekaserver")
+infrastructureServices=("configserver" "eurekaserver" "gatewayserver")
 
 for service in "${services[@]}"; do
     (
