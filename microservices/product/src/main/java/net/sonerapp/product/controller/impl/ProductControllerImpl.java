@@ -24,7 +24,7 @@ import net.sonerapp.product.service.ProductService;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/v1")
 @Tag(name = "Product API")
 public class ProductControllerImpl implements ProductController {
 

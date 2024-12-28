@@ -13,7 +13,7 @@ import net.sonerapp.product_aggregator.dto.review.ReviewDto;
 @HttpExchange
 public interface ReviewService {
 
-    @GetExchange("api/v1/review/{productId}")
+    @GetExchange("/v1/review/{productId}")
     ResponseEntity<List<ReviewDto>> getProductReviews(@PathVariable UUID productId);
 
 }

@@ -12,7 +12,7 @@ import net.sonerapp.product_aggregator.dto.product.ProductDto;
 @HttpExchange
 public interface ProductService {
 
-    @GetExchange(value = "/api/v1/product/{productId}")
+    @GetExchange(value = "/v1/product/{productId}")
     ResponseEntity<ProductDto> getProduct(@PathVariable UUID productId);
 
 }

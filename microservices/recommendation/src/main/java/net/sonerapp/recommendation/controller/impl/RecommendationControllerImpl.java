@@ -28,66 +28,68 @@ import net.sonerapp.recommendation.service.RecommendationService;
 @RestController
 @Slf4j
 @AllArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/v1")
 @Tag(name = "Recommendation")
 public class RecommendationControllerImpl implements RecommendationController {
 
-    private final RecommendationService recommendationService;
+        private final RecommendationService recommendationService;
 
-    @Override
-    @Operation(summary = "Get recommendations for a product", description = "Retrieve a list of recommendations for a specific product by its ID.", responses = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved recommendations.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecommendationDto[].class))),
-            @ApiResponse(responseCode = "403", description = "The product ID could not be converted to a UUID due to an argument type error.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
-    })
-    public ResponseEntity<List<RecommendationDto>> getProductRecommendation(UUID productId) {
-        List<RecommendationDto> list = recommendationService.getProductRecommendation(productId);
-        return ResponseEntity.ok(list);
-    }
+        @Override
+        @Operation(summary = "Get recommendations for a product", description = "Retrieve a list of recommendations for a specific product by its ID.", responses = {
+                        @ApiResponse(responseCode = "200", description = "Successfully retrieved recommendations.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecommendationDto[].class))),
+                        @ApiResponse(responseCode = "403", description = "The product ID could not be converted to a UUID due to an argument type error.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
+        })
+        public ResponseEntity<List<RecommendationDto>> getProductRecommendation(UUID productId) {
+                List<RecommendationDto> list = recommendationService.getProductRecommendation(productId);
+                return ResponseEntity.ok(list);
+        }
 
-    @Override
-    @Operation(summary = "Get recommendations page", description = "Retrieve a paginated list of recommendations.", responses = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved paginated recommendations.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecommendationDto[].class)))
-    })
-    public ResponseEntity<List<RecommendationDto>> getRecommendationPage(Pageable pageable) {
-        List<RecommendationDto> recommendationDtoPage = recommendationService.getRecommendationPage(pageable);
-        return ResponseEntity.ok(recommendationDtoPage);
-    }
+        @Override
+        @Operation(summary = "Get recommendations page", description = "Retrieve a paginated list of recommendations.", responses = {
+                        @ApiResponse(responseCode = "200", description = "Successfully retrieved paginated recommendations.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecommendationDto[].class)))
+        })
+        public ResponseEntity<List<RecommendationDto>> getRecommendationPage(Pageable pageable) {
+                List<RecommendationDto> recommendationDtoPage = recommendationService.getRecommendationPage(pageable);
+                return ResponseEntity.ok(recommendationDtoPage);
+        }
 
-    @Override
-    @Operation(summary = "Create a new recommendation", description = "Create a new recommendation based on the provided details.", responses = {
-            @ApiResponse(responseCode = "201", description = "Successfully created a new recommendation.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecommendationDto.class))),
-            @ApiResponse(responseCode = "400", description = "Validation failed for the provided input.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
-    })
-    public ResponseEntity<RecommendationDto> createRecommendation(
-            @Valid @RequestBody CreateRecommendationDto createRecommendationDto) {
-        RecommendationDto recommendationDto = recommendationService.createRecommendation(createRecommendationDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(recommendationDto);
-    }
+        @Override
+        @Operation(summary = "Create a new recommendation", description = "Create a new recommendation based on the provided details.", responses = {
+                        @ApiResponse(responseCode = "201", description = "Successfully created a new recommendation.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecommendationDto.class))),
+                        @ApiResponse(responseCode = "400", description = "Validation failed for the provided input.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
+        })
+        public ResponseEntity<RecommendationDto> createRecommendation(
+                        @Valid @RequestBody CreateRecommendationDto createRecommendationDto) {
+                RecommendationDto recommendationDto = recommendationService
+                                .createRecommendation(createRecommendationDto);
+                return ResponseEntity.status(HttpStatus.CREATED).body(recommendationDto);
+        }
 
-    @Override
-    @Operation(summary = "Update an existing recommendation", description = "Update the details of an existing recommendation by its ID.", responses = {
-            @ApiResponse(responseCode = "200", description = "Successfully updated the recommendation.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecommendationDto.class))),
-            @ApiResponse(responseCode = "400", description = "Validation failed for the provided input.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))),
-            @ApiResponse(responseCode = "403", description = "The recommendation ID could not be converted to a UUID due to an argument type error.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))),
-            @ApiResponse(responseCode = "404", description = "The recommendation with the specified ID was not found.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
-    })
-    public ResponseEntity<RecommendationDto> updateRecommendation(
-            @Valid UpdateRecommendationDto updateRecommendationDto, UUID recommendationId) {
-        RecommendationDto recommendationDto = recommendationService.updateRecommendation(updateRecommendationDto,
-                recommendationId);
-        return ResponseEntity.ok(recommendationDto);
-    }
+        @Override
+        @Operation(summary = "Update an existing recommendation", description = "Update the details of an existing recommendation by its ID.", responses = {
+                        @ApiResponse(responseCode = "200", description = "Successfully updated the recommendation.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecommendationDto.class))),
+                        @ApiResponse(responseCode = "400", description = "Validation failed for the provided input.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))),
+                        @ApiResponse(responseCode = "403", description = "The recommendation ID could not be converted to a UUID due to an argument type error.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))),
+                        @ApiResponse(responseCode = "404", description = "The recommendation with the specified ID was not found.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
+        })
+        public ResponseEntity<RecommendationDto> updateRecommendation(
+                        @Valid UpdateRecommendationDto updateRecommendationDto, UUID recommendationId) {
+                RecommendationDto recommendationDto = recommendationService.updateRecommendation(
+                                updateRecommendationDto,
+                                recommendationId);
+                return ResponseEntity.ok(recommendationDto);
+        }
 
-    @Override
-    @Operation(summary = "Delete a recommendation", description = "Delete an existing recommendation by its ID.", responses = {
-            @ApiResponse(responseCode = "204", description = "Successfully deleted the recommendation.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),
-            @ApiResponse(responseCode = "400", description = "Validation failed for the provided input.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))),
-            @ApiResponse(responseCode = "403", description = "The recommendation ID could not be converted to a UUID due to an argument type error.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))),
-            @ApiResponse(responseCode = "404", description = "The recommendation with the specified ID was not found.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
-    })
-    public ResponseEntity<Void> deleteRecommendation(UUID recommendationId) {
-        recommendationService.deleteRecommendation(recommendationId);
-        return ResponseEntity.noContent().build();
-    }
+        @Override
+        @Operation(summary = "Delete a recommendation", description = "Delete an existing recommendation by its ID.", responses = {
+                        @ApiResponse(responseCode = "204", description = "Successfully deleted the recommendation.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),
+                        @ApiResponse(responseCode = "400", description = "Validation failed for the provided input.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))),
+                        @ApiResponse(responseCode = "403", description = "The recommendation ID could not be converted to a UUID due to an argument type error.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))),
+                        @ApiResponse(responseCode = "404", description = "The recommendation with the specified ID was not found.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
+        })
+        public ResponseEntity<Void> deleteRecommendation(UUID recommendationId) {
+                recommendationService.deleteRecommendation(recommendationId);
+                return ResponseEntity.noContent().build();
+        }
 
 }

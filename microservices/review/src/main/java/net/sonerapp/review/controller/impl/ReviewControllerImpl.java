@@ -27,7 +27,7 @@ import net.sonerapp.review.service.ReviewService;
 @RestController
 @Slf4j
 @AllArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/v1")
 @Tag(name = "Review", description = "Endpoints for managing product reviews")
 public class ReviewControllerImpl implements ReviewController {
 

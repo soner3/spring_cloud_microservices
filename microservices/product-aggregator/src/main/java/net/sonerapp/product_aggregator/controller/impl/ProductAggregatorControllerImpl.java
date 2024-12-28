@@ -19,7 +19,7 @@ import net.sonerapp.product_aggregator.service.ProductAggregatorService;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/v1")
 @Tag(name = "Product Aggregator", description = "API to fetch aggregated product data, including recommendations and reviews.")
 public class ProductAggregatorControllerImpl implements ProductAggregatorController {
 

@@ -1,0 +1,17 @@
+server:
+  port: 7777
+
+info:
+  app:
+    name: "Gatewayserver"
+    description: "Gatewayserver for Spring Cloud Microservices"
+    version: "1.0.0"
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:7070/eureka/

@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import net.sonerapp.product_aggregator.dto.ProductAggregatorDto;
 
 public interface ProductAggregatorController {
-    @GetMapping(value = "/product-aggregate/{productId}")
+    @GetMapping(value = "/{productId}")
     ResponseEntity<ProductAggregatorDto> getProduct(@PathVariable UUID productId);
 }

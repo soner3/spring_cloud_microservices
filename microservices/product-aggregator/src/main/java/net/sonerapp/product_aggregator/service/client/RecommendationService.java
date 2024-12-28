@@ -13,7 +13,7 @@ import net.sonerapp.product_aggregator.dto.recommendation.RecommendationDto;
 @HttpExchange
 public interface RecommendationService {
 
-    @GetExchange("api/v1/recommendation/{productId}")
+    @GetExchange("/v1/recommendation/{productId}")
     ResponseEntity<List<RecommendationDto>> getProductRecommendation(@PathVariable UUID productId);
 
 }
