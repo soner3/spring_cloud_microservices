@@ -9,9 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
-import net.sonerapp.recommendation.dto.CreateRecommendationDto;
+import net.sonerapp.recommendation.dto.ModifyRecommendationDto;
 import net.sonerapp.recommendation.dto.RecommendationDto;
-import net.sonerapp.recommendation.dto.UpdateRecommendationDto;
 import net.sonerapp.recommendation.entity.Recommendation;
 import net.sonerapp.recommendation.exception.NotFoundException;
 import net.sonerapp.recommendation.repository.RecommendationRepository;
@@ -34,9 +33,9 @@ public class RecommendationServiceImpl implements RecommendationService {
     }
 
     @Override
-    public RecommendationDto createRecommendation(CreateRecommendationDto createRecommendationDto) {
-        Recommendation recommendation = new Recommendation(createRecommendationDto.productId(),
-                createRecommendationDto.author(), createRecommendationDto.rate(), createRecommendationDto.content());
+    public RecommendationDto createRecommendation(ModifyRecommendationDto modifyRecommendationDto, UUID productId) {
+        Recommendation recommendation = new Recommendation(productId,
+                modifyRecommendationDto.author(), modifyRecommendationDto.rate(), modifyRecommendationDto.content());
         while (recommendationRepository.existsByRecommendationId(recommendation.getRecommendationId())) {
             recommendation.setRecommendationId(UUID.randomUUID());
         }
@@ -53,13 +52,13 @@ public class RecommendationServiceImpl implements RecommendationService {
     }
 
     @Override
-    public RecommendationDto updateRecommendation(UpdateRecommendationDto updateRecommendationDto,
+    public RecommendationDto updateRecommendation(ModifyRecommendationDto modifyRecommendationDto,
             UUID recommendationId) {
         Recommendation recommendation = recommendationRepository.findByRecommendationId(recommendationId).orElseThrow(
                 () -> new NotFoundException("No Recommendation found for id: " + recommendationId.toString()));
-        recommendation.setAuthor(updateRecommendationDto.author());
-        recommendation.setRate(updateRecommendationDto.rate());
-        recommendation.setContent(updateRecommendationDto.content());
+        recommendation.setAuthor(modifyRecommendationDto.author());
+        recommendation.setRate(modifyRecommendationDto.rate());
+        recommendation.setContent(modifyRecommendationDto.content());
         Recommendation updatedRecommendation = recommendationRepository.save(recommendation);
         return conversionService.convert(updatedRecommendation, RecommendationDto.class);
     }

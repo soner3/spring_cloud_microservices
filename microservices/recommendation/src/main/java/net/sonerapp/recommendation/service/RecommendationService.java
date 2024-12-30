@@ -6,19 +6,18 @@ import java.util.UUID;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.sonerapp.recommendation.dto.CreateRecommendationDto;
+import net.sonerapp.recommendation.dto.ModifyRecommendationDto;
 import net.sonerapp.recommendation.dto.RecommendationDto;
-import net.sonerapp.recommendation.dto.UpdateRecommendationDto;
 
 public interface RecommendationService {
 
     List<RecommendationDto> getProductRecommendation(UUID productId);
 
-    RecommendationDto createRecommendation(CreateRecommendationDto createRecommendationDto);
+    RecommendationDto createRecommendation(ModifyRecommendationDto modifyRecommendationDto, UUID productId);
 
     List<RecommendationDto> getRecommendationPage(Pageable pageable);
 
-    RecommendationDto updateRecommendation(UpdateRecommendationDto updateRecommendationDto, UUID recommendationId);
+    RecommendationDto updateRecommendation(ModifyRecommendationDto modifyRecommendationDto, UUID recommendationId);
 
     @Transactional
     void deleteRecommendation(UUID recommendationId);

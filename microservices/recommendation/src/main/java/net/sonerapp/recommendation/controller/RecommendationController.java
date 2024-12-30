@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import jakarta.validation.Valid;
-import net.sonerapp.recommendation.dto.CreateRecommendationDto;
+import net.sonerapp.recommendation.dto.ModifyRecommendationDto;
 import net.sonerapp.recommendation.dto.RecommendationDto;
-import net.sonerapp.recommendation.dto.UpdateRecommendationDto;
 
 public interface RecommendationController {
 
@@ -27,13 +26,14 @@ public interface RecommendationController {
         @GetMapping("/recommendation")
         public ResponseEntity<List<RecommendationDto>> getRecommendationPage(Pageable pageable);
 
-        @PostMapping("/recommendation")
+        @PostMapping("/recommendation/{productId}")
         public ResponseEntity<RecommendationDto> createRecommendation(
-                        @RequestBody @Valid CreateRecommendationDto createRecommendationDto);
+                        @RequestBody @Valid ModifyRecommendationDto modifyRecommendationDto,
+                        @PathVariable UUID productId);
 
         @PutMapping("/recommendation/{recommendationId}")
         public ResponseEntity<RecommendationDto> updateRecommendation(
-                        @RequestBody @Valid UpdateRecommendationDto updateRecommendationDto,
+                        @RequestBody @Valid ModifyRecommendationDto modifyRecommendationDto,
                         @PathVariable UUID recommendationId);
 
         @DeleteMapping("/recommendation/{recommendationId}")

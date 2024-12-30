@@ -20,9 +20,8 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sonerapp.recommendation.controller.RecommendationController;
-import net.sonerapp.recommendation.dto.CreateRecommendationDto;
+import net.sonerapp.recommendation.dto.ModifyRecommendationDto;
 import net.sonerapp.recommendation.dto.RecommendationDto;
-import net.sonerapp.recommendation.dto.UpdateRecommendationDto;
 import net.sonerapp.recommendation.service.RecommendationService;
 
 @RestController
@@ -60,9 +59,9 @@ public class RecommendationControllerImpl implements RecommendationController {
                         @ApiResponse(responseCode = "400", description = "Validation failed for the provided input.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
         })
         public ResponseEntity<RecommendationDto> createRecommendation(
-                        @Valid @RequestBody CreateRecommendationDto createRecommendationDto) {
+                        @Valid @RequestBody ModifyRecommendationDto modifyRecommendationDto, UUID productId) {
                 RecommendationDto recommendationDto = recommendationService
-                                .createRecommendation(createRecommendationDto);
+                                .createRecommendation(modifyRecommendationDto, productId);
                 return ResponseEntity.status(HttpStatus.CREATED).body(recommendationDto);
         }
 
@@ -74,9 +73,9 @@ public class RecommendationControllerImpl implements RecommendationController {
                         @ApiResponse(responseCode = "404", description = "The recommendation with the specified ID was not found.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
         })
         public ResponseEntity<RecommendationDto> updateRecommendation(
-                        @Valid UpdateRecommendationDto updateRecommendationDto, UUID recommendationId) {
+                        @Valid ModifyRecommendationDto modifyRecommendationDto, UUID recommendationId) {
                 RecommendationDto recommendationDto = recommendationService.updateRecommendation(
-                                updateRecommendationDto,
+                                modifyRecommendationDto,
                                 recommendationId);
                 return ResponseEntity.ok(recommendationDto);
         }

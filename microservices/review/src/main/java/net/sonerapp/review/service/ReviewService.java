@@ -6,19 +6,18 @@ import java.util.UUID;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.sonerapp.review.dto.CreateReviewDto;
+import net.sonerapp.review.dto.ModifyReviewDto;
 import net.sonerapp.review.dto.ReviewDto;
-import net.sonerapp.review.dto.UpdateReviewDto;
 
 public interface ReviewService {
 
     List<ReviewDto> getProductReviews(UUID productId);
 
-    ReviewDto createReview(CreateReviewDto createReviewDto);
+    ReviewDto createReview(ModifyReviewDto modifyReviewDto, UUID productId);
 
     List<ReviewDto> getReviewPage(Pageable pageable);
 
-    ReviewDto updateReview(UpdateReviewDto updateReviewDto, UUID reviewId);
+    ReviewDto updateReview(ModifyReviewDto modifyReviewDto, UUID reviewId);
 
     @Transactional
     void deleteReview(UUID reviewId);

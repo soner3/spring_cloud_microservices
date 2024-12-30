@@ -9,9 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
-import net.sonerapp.review.dto.CreateReviewDto;
+import net.sonerapp.review.dto.ModifyReviewDto;
 import net.sonerapp.review.dto.ReviewDto;
-import net.sonerapp.review.dto.UpdateReviewDto;
 import net.sonerapp.review.entity.Review;
 import net.sonerapp.review.exception.NotFoundException;
 import net.sonerapp.review.repository.ReviewRepository;
@@ -33,9 +32,9 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDto createReview(CreateReviewDto createReviewDto) {
-        Review review = new Review(createReviewDto.productId(), createReviewDto.author(), createReviewDto.subject(),
-                createReviewDto.content());
+    public ReviewDto createReview(ModifyReviewDto modifyReviewDto, UUID productId) {
+        Review review = new Review(productId, modifyReviewDto.author(), modifyReviewDto.subject(),
+                modifyReviewDto.content());
         while (reviewRepository.existsByReviewId(review.getReviewId())) {
             review.setReviewId(UUID.randomUUID());
         }
@@ -61,12 +60,12 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDto updateReview(UpdateReviewDto updateReviewDto, UUID reviewId) {
+    public ReviewDto updateReview(ModifyReviewDto modifyReviewDto, UUID reviewId) {
         Review review = reviewRepository.findByReviewId(reviewId)
                 .orElseThrow(() -> new NotFoundException("No review found for id: " + reviewId.toString()));
-        review.setAuthor(updateReviewDto.author());
-        review.setContent(updateReviewDto.content());
-        review.setSubject(updateReviewDto.subject());
+        review.setAuthor(modifyReviewDto.author());
+        review.setContent(modifyReviewDto.content());
+        review.setSubject(modifyReviewDto.subject());
 
         Review updatedReview = reviewRepository.save(review);
         return conversionService.convert(updatedReview, ReviewDto.class);

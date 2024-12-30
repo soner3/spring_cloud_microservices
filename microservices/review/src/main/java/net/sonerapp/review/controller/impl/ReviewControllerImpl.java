@@ -19,9 +19,8 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sonerapp.review.controller.ReviewController;
-import net.sonerapp.review.dto.CreateReviewDto;
+import net.sonerapp.review.dto.ModifyReviewDto;
 import net.sonerapp.review.dto.ReviewDto;
-import net.sonerapp.review.dto.UpdateReviewDto;
 import net.sonerapp.review.service.ReviewService;
 
 @RestController
@@ -49,8 +48,8 @@ public class ReviewControllerImpl implements ReviewController {
       @ApiResponse(responseCode = "201", description = "Successfully created the review", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ReviewDto.class))),
       @ApiResponse(responseCode = "400", description = "Bad Request - invalid review data", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
   })
-  public ResponseEntity<ReviewDto> createReview(@Valid CreateReviewDto createReviewDto) {
-    ReviewDto reviewDto = reviewService.createReview(createReviewDto);
+  public ResponseEntity<ReviewDto> createReview(@Valid ModifyReviewDto modifyReviewDto, UUID productId) {
+    ReviewDto reviewDto = reviewService.createReview(modifyReviewDto, productId);
     return ResponseEntity.status(HttpStatus.CREATED).body(reviewDto);
   }
 
@@ -81,8 +80,8 @@ public class ReviewControllerImpl implements ReviewController {
       @ApiResponse(responseCode = "403", description = "Forbidden - user doesn't have access to update the review", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))),
       @ApiResponse(responseCode = "404", description = "Not Found - review not found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
   })
-  public ResponseEntity<ReviewDto> updateReview(@Valid UpdateReviewDto updateReviewDto, UUID reviewId) {
-    ReviewDto reviewDto = reviewService.updateReview(updateReviewDto, reviewId);
+  public ResponseEntity<ReviewDto> updateReview(@Valid ModifyReviewDto modifyReviewDto, UUID reviewId) {
+    ReviewDto reviewDto = reviewService.updateReview(modifyReviewDto, reviewId);
     return ResponseEntity.ok(reviewDto);
   }
 
