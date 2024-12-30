@@ -46,4 +46,17 @@ public class ProductAggregatorControllerImpl implements ProductAggregatorControl
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
+    @Override
+    public ResponseEntity<Void> deleteProduct(String correlationId, UUID productId) {
+        productAggregatorService.deleteProduct(correlationId, productId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @Override
+    public ResponseEntity<Void> updateProduct(String correlationId, @Valid ModifyProductDto modifyProductDto,
+            UUID productId) {
+        productAggregatorService.updateProduct(modifyProductDto, correlationId, productId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
 }

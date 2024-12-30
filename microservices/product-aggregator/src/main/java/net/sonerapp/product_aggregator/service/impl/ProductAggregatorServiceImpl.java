@@ -32,9 +32,11 @@ public class ProductAggregatorServiceImpl implements ProductAggregatorService {
     private final ReviewService reviewService;
     private final StreamBridge streamBridge;
 
+    private final String PRODUCT_BINDING_NAME = "productHandler-out-0";
+
     @Override
     public ProductAggregatorDto aggregateProduct(UUID productId, String correlationId) {
-        log.debug("Correlation-id found: {}", correlationId);
+        log.info("Correlation-id found: {}", correlationId);
         ResponseEntity<ProductDto> productResponse = productService.getProduct(productId, correlationId);
         ResponseEntity<List<RecommendationDto>> recommendationReponse = recommendationService
                 .getProductRecommendation(productId, correlationId);
@@ -48,13 +50,34 @@ public class ProductAggregatorServiceImpl implements ProductAggregatorService {
 
     @Override
     public void createProduct(ModifyProductDto modifyProductDto, String correlationId) {
-        log.debug("Correlation-id found: {}", correlationId);
+        log.info("Correlation-id found: {}", correlationId);
         ProductEventDto productEventDto = new ProductEventDto(Optional.of(modifyProductDto), Optional.ofNullable(null));
         Event<ProductEventDto, String> event = new Event<ProductEventDto, String>(Event.Type.CREATE, productEventDto,
                 correlationId);
         log.debug("Sending message to product service: {}", event);
-        boolean maybeSuccess = streamBridge.send("productHandler-out-0", event);
-        log.info("Sending status: {}", maybeSuccess);
+        streamBridge.send(PRODUCT_BINDING_NAME, event);
+    }
+
+    @Override
+    public void deleteProduct(String correlationId, UUID productId) {
+        log.info("Correlation-id found: {}", correlationId);
+        ProductEventDto productEventDto = new ProductEventDto(Optional.ofNullable(null), Optional.of(productId));
+        Event<ProductEventDto, String> event = new Event<ProductEventDto, String>(Event.Type.DELETE, productEventDto,
+                correlationId);
+        log.debug("Sending message to product service: {}", event);
+        streamBridge.send(PRODUCT_BINDING_NAME, event);
+
+    }
+
+    @Override
+    public void updateProduct(ModifyProductDto modifyProductDto, String correlationId, UUID productId) {
+        log.info("Correlation-id found: {}", correlationId);
+        ProductEventDto productEventDto = new ProductEventDto(Optional.of(modifyProductDto), Optional.of(productId));
+        Event<ProductEventDto, String> event = new Event<ProductEventDto, String>(Event.Type.UPDATE, productEventDto,
+                correlationId);
+        log.debug("Sending message to product service: {}", event);
+        streamBridge.send(PRODUCT_BINDING_NAME, event);
+
     }
 
 }

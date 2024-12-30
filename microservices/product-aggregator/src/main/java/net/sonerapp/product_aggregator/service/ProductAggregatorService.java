@@ -11,4 +11,8 @@ public interface ProductAggregatorService {
 
     void createProduct(ModifyProductDto modifyProductDto, String correlationId);
 
+    void updateProduct(ModifyProductDto modifyProductDto, String correlationId, UUID productId);
+
+    void deleteProduct(String correlationId, UUID productId);
+
 }
