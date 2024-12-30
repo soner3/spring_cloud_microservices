@@ -41,7 +41,8 @@ public class ProductFunctions {
                     break;
                 default:
                     log.error("Could not handle product event for correlation-id: {}", correlationId);
-                    break;
+                    throw new InvalidEventDataException(
+                            "No valid event type has been sent for correlation-id: " + correlationId);
             }
         };
 
@@ -58,7 +59,7 @@ public class ProductFunctions {
         return productEventDto
                 .productId()
                 .orElseThrow(() -> new InvalidEventDataException(
-                        "No Modify-Product-Dto found in event data for correlation-id: " + correlationId));
+                        "No Product-Id found in event data for correlation-id: " + correlationId));
     }
 
 }

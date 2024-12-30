@@ -23,11 +23,10 @@ spring:
     stream:
       bindings:
         productHandler-in-0:
-          destination: product
+          destination: product-queue
           group: ${spring.application.name}
           consumer:
             max-attempts: 5
-
 springdoc:
   swagger-ui:
     path: /openapi/swagger-ui.html

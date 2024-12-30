@@ -12,8 +12,8 @@ spring:
   cloud:
     stream:
       bindings:
-        createProduct-out-0:
-          destination: product
+        productHandler-out-0:
+          destination: product-queue
 
 springdoc:
   swagger-ui:

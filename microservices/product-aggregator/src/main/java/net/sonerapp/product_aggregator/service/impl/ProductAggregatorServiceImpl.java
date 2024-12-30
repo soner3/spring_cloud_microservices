@@ -53,7 +53,7 @@ public class ProductAggregatorServiceImpl implements ProductAggregatorService {
         Event<ProductEventDto, String> event = new Event<ProductEventDto, String>(Event.Type.CREATE, productEventDto,
                 correlationId);
         log.debug("Sending message to product service: {}", event);
-        boolean maybeSuccess = streamBridge.send("createProduct-out-0", event);
+        boolean maybeSuccess = streamBridge.send("productHandler-out-0", event);
         log.info("Sending status: {}", maybeSuccess);
     }
 
