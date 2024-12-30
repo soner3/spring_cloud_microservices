@@ -20,10 +20,16 @@ services:
       - sonerapp
 
   recommendation:
-    image: soner9/recommendation:v6
+    image: soner9/recommendation:v7
     container_name: recommendation
     ports:
       - 7002:7002
+    healthcheck:
+      test: "curl --fail --silent localhost:7002/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     environment:
       - SPRING_APPLICATION_NAME=recommendation
       - SPRING_DATA_MONGODB_HOST=mongo-recommendation

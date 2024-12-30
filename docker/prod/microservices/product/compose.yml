@@ -20,10 +20,16 @@ services:
       - sonerapp
 
   product:
-    image: soner9/product:v6
+    image: soner9/product:v7
     container_name: product
     ports:
       - 7001:7001
+    healthcheck:
+      test: "curl --fail --silent localhost:7001/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     environment:
       - SPRING_APPLICATION_NAME=product
       - SPRING_DATA_MONGODB_HOST=mongo-product

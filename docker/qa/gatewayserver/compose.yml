@@ -1,0 +1,26 @@
+services:
+  gatewayserver:
+    container_name: gatewayserver
+    image: soner9/gatewayserver:v7
+    ports:
+      - 7777:7777
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    env_file:
+      - ./../global.env
+    environment:
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://configserver:7071
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:7070/eureka/
+    depends_on:
+      product:
+        condition: service_healthy
+      product-aggregator:
+        condition: service_healthy
+      recommendation:
+        condition: service_healthy
+      review:
+        condition: service_healthy
+    networks:
+      - sonerapp
