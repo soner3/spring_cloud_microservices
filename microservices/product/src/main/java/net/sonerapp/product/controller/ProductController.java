@@ -19,21 +19,21 @@ import net.sonerapp.product.dto.ProductDto;
 
 public interface ProductController {
 
-    @GetMapping("/product/{productId}")
-    public ResponseEntity<ProductDto> getProduct(@PathVariable UUID productId,
-            @RequestHeader("sonerapp-correlation-id") String correlationId);
+        @GetMapping("/product/{productId}")
+        public ResponseEntity<ProductDto> getProduct(@PathVariable UUID productId,
+                        @RequestHeader("sonerapp-correlation-id") String correlationId);
 
-    @GetMapping("/product")
-    public ResponseEntity<List<ProductDto>> getProductPage(Pageable pageable);
+        @GetMapping("/product")
+        public ResponseEntity<List<ProductDto>> getProductPage(Pageable pageable);
 
-    @PostMapping("/product")
-    public ResponseEntity<ProductDto> createProduct(@RequestBody @Valid ModifyProductDto modifyProductDto);
+        @PostMapping("/product")
+        public ResponseEntity<ProductDto> createProduct(@RequestBody @Valid ModifyProductDto modifyProductDto);
 
-    @PutMapping("/product/{productId}")
-    public ResponseEntity<ProductDto> updateProduct(@RequestBody @Valid ModifyProductDto modifyProductDto,
-            @PathVariable UUID productId);
+        @PutMapping("/product/{productId}")
+        public ResponseEntity<ProductDto> updateProduct(@RequestBody @Valid ModifyProductDto modifyProductDto,
+                        @PathVariable UUID productId);
 
-    @DeleteMapping("/product/{productId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable UUID productId);
+        @DeleteMapping("/product/{productId}")
+        public ResponseEntity<Void> deleteProduct(@PathVariable UUID productId);
 
 }

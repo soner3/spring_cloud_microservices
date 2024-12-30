@@ -17,6 +17,16 @@ spring:
       port: 27017
       database: productdb
       authentication-database: admin
+  cloud:
+    function:
+      definition: productHandler
+    stream:
+      bindings:
+        productHandler-in-0:
+          destination: product
+          group: ${spring.application.name}
+          consumer:
+            max-attempts: 5
 
 springdoc:
   swagger-ui:

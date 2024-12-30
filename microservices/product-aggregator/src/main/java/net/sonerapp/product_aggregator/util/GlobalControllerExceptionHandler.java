@@ -3,6 +3,7 @@ package net.sonerapp.product_aggregator.util;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
@@ -27,6 +28,11 @@ public class GlobalControllerExceptionHandler {
             return ResponseEntity.of(problemDetail).build();
         }
         return HttpErrorInfo.errorInfo(HttpStatus.INTERNAL_SERVER_ERROR, ex, "Rest Client Error");
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ProblemDetail> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        return HttpErrorInfo.errorInfoMethodArguments(HttpStatus.BAD_REQUEST, ex, "Invalid Method Arguments");
     }
 
 }

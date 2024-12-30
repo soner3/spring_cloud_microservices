@@ -9,6 +9,11 @@ spring:
     port: 5672
     username: guest
     password: guest
+  cloud:
+    stream:
+      bindings:
+        createProduct-out-0:
+          destination: product
 
 springdoc:
   swagger-ui:

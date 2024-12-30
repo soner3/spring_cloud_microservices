@@ -2,6 +2,7 @@ package net.sonerapp.product_aggregator.controller.impl;
 
 import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,16 +13,16 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import net.sonerapp.product_aggregator.controller.ProductAggregatorController;
 import net.sonerapp.product_aggregator.dto.ProductAggregatorDto;
+import net.sonerapp.product_aggregator.dto.product.ModifyProductDto;
 import net.sonerapp.product_aggregator.service.ProductAggregatorService;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/v1")
-@Slf4j
 @Tag(name = "Product Aggregator", description = "API to fetch aggregated product data, including recommendations and reviews.")
 public class ProductAggregatorControllerImpl implements ProductAggregatorController {
 
@@ -35,9 +36,14 @@ public class ProductAggregatorControllerImpl implements ProductAggregatorControl
             @ApiResponse(responseCode = "500", description = "An unhandled error occurred in one of the REST clients.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
     })
     public ResponseEntity<ProductAggregatorDto> getProduct(String correlationId, UUID productId) {
-        log.debug("Correlation-id found: {}", correlationId);
         ProductAggregatorDto productAggregatorDto = productAggregatorService.aggregateProduct(productId, correlationId);
         return ResponseEntity.ok(productAggregatorDto);
+    }
+
+    @Override
+    public ResponseEntity<Void> createProduct(String correlationId, @Valid ModifyProductDto modifyProductDto) {
+        productAggregatorService.createProduct(modifyProductDto, correlationId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
 }
