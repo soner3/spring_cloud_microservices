@@ -1,8 +1,10 @@
 package net.sonerapp.product_aggregator.dto.product;
 
+import java.util.UUID;
+
 public record ProductDto(
-        String productId,
-        String name,
-        int weight,
-        double price) {
+                UUID productId,
+                String name,
+                int weight,
+                double price) {
 }

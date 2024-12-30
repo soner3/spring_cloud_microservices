@@ -38,7 +38,7 @@ public class ReviewControllerImpl implements ReviewController {
       @ApiResponse(responseCode = "403", description = "Forbidden - user doesn't have access", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
   })
   public ResponseEntity<List<ReviewDto>> getProductReviews(UUID productId, String correlationId) {
-    log.debug("Correlation-id found: {}", correlationId);
+    log.info("Correlation-id found: {}", correlationId);
     List<ReviewDto> reviewDtoList = reviewService.getProductReviews(productId);
     return ResponseEntity.ok(reviewDtoList);
   }

@@ -39,7 +39,7 @@ public class RecommendationControllerImpl implements RecommendationController {
                         @ApiResponse(responseCode = "403", description = "The product ID could not be converted to a UUID due to an argument type error.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
         })
         public ResponseEntity<List<RecommendationDto>> getProductRecommendation(UUID productId, String correlationId) {
-                log.debug("Correlation-id found: {}", correlationId);
+                log.info("Correlation-id found: {}", correlationId);
                 List<RecommendationDto> list = recommendationService.getProductRecommendation(productId);
                 return ResponseEntity.ok(list);
         }
