@@ -27,6 +27,7 @@ spring:
           group: ${spring.application.name}
           consumer:
             max-attempts: 5
+
 springdoc:
   swagger-ui:
     path: /openapi/swagger-ui.html

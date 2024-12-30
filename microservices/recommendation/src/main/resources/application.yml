@@ -17,6 +17,16 @@ spring:
       port: 27018
       database: recommendationdb
       authentication-database: admin
+  cloud:
+    function:
+      definition: recommendationHandler
+    stream:
+      bindings:
+        recommendationHandler-in-0:
+          destination: recommendation-queue
+          group: ${spring.application.name}
+          consumer:
+            max-attempts: 5
 
 springdoc:
   swagger-ui:

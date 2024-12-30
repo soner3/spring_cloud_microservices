@@ -14,6 +14,10 @@ spring:
       bindings:
         productHandler-out-0:
           destination: product-queue
+        reviewHandler-out-0:
+          destination: review-queue
+        recommendationHandler-out-0:
+          destination: recommendation-queue
 
 springdoc:
   swagger-ui:

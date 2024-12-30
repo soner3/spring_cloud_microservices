@@ -18,6 +18,8 @@ import lombok.AllArgsConstructor;
 import net.sonerapp.product_aggregator.controller.ProductAggregatorController;
 import net.sonerapp.product_aggregator.dto.ProductAggregatorDto;
 import net.sonerapp.product_aggregator.dto.product.ModifyProductDto;
+import net.sonerapp.product_aggregator.dto.recommendation.ModifyRecommendationDto;
+import net.sonerapp.product_aggregator.dto.review.ModifyReviewDto;
 import net.sonerapp.product_aggregator.service.ProductAggregatorService;
 
 @RestController
@@ -67,6 +69,46 @@ public class ProductAggregatorControllerImpl implements ProductAggregatorControl
     public ResponseEntity<Void> updateProduct(String correlationId, @Valid ModifyProductDto modifyProductDto,
             UUID productId) {
         productAggregatorService.updateProduct(modifyProductDto, correlationId, productId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @Override
+    public ResponseEntity<Void> createRecommendation(String correlationId,
+            @Valid ModifyRecommendationDto modifyRecommendationDto, UUID productId) {
+        productAggregatorService.createRecommendation(modifyRecommendationDto, correlationId, productId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteRecommendation(String correlationId, UUID recommendationId) {
+        productAggregatorService.deleteRecommendation(correlationId, recommendationId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @Override
+    public ResponseEntity<Void> updateRecommendation(String correlationId,
+            @Valid ModifyRecommendationDto modifyRecommendationDto, UUID recommendationId) {
+        productAggregatorService.updateRecommendation(modifyRecommendationDto, correlationId, recommendationId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @Override
+    public ResponseEntity<Void> createReview(String correlationId, @Valid ModifyReviewDto modifyReviewDto,
+            UUID productId) {
+        productAggregatorService.createReview(modifyReviewDto, correlationId, productId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteReview(String correlationId, UUID reviewId) {
+        productAggregatorService.deleteReview(correlationId, reviewId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @Override
+    public ResponseEntity<Void> updateReview(String correlationId, @Valid ModifyReviewDto modifyReviewDto,
+            UUID reviewId) {
+        productAggregatorService.updateReview(modifyReviewDto, correlationId, reviewId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
