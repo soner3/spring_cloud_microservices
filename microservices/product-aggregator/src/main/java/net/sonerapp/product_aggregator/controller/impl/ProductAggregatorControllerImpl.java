@@ -41,18 +41,29 @@ public class ProductAggregatorControllerImpl implements ProductAggregatorControl
     }
 
     @Override
+    @Operation(summary = "Create a new product", description = "Creates a new product with the given details.", responses = {
+            @ApiResponse(responseCode = "202", description = "Product creation accepted."),
+            @ApiResponse(responseCode = "400", description = "Invalid product data.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)))
+    })
     public ResponseEntity<Void> createProduct(String correlationId, @Valid ModifyProductDto modifyProductDto) {
         productAggregatorService.createProduct(modifyProductDto, correlationId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @Override
+    @Operation(summary = "Delete a product", description = "Deletes the product with the specified ID.", responses = {
+            @ApiResponse(responseCode = "202", description = "Product deletion accepted.")
+    })
     public ResponseEntity<Void> deleteProduct(String correlationId, UUID productId) {
         productAggregatorService.deleteProduct(correlationId, productId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @Override
+    @Operation(summary = "Update a product", description = "Updates the details of an existing product.", responses = {
+            @ApiResponse(responseCode = "202", description = "Product update accepted."),
+            @ApiResponse(responseCode = "400", description = "Invalid product data.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))),
+    })
     public ResponseEntity<Void> updateProduct(String correlationId, @Valid ModifyProductDto modifyProductDto,
             UUID productId) {
         productAggregatorService.updateProduct(modifyProductDto, correlationId, productId);
