@@ -14,46 +14,46 @@ import net.sonerapp.product_aggregator.service.client.ReviewService;
 @Configuration
 public class RestClientConfig {
 
-    @Bean
-    @LoadBalanced
-    RestClient.Builder restClientBuilder() {
-        return RestClient.builder();
-    }
+        @Bean
+        @LoadBalanced
+        RestClient.Builder restClientBuilder() {
+                return RestClient.builder();
+        }
 
-    @Bean
-    ProductService productService(@LoadBalanced RestClient.Builder restClientBuilder) {
-        RestClient restClient = restClientBuilder
-                .baseUrl("lb://product")
-                .build();
-        RestClientAdapter restClientAdapter = RestClientAdapter.create(restClient);
-        return HttpServiceProxyFactory
-                .builderFor(restClientAdapter)
-                .build()
-                .createClient(ProductService.class);
-    }
+        @Bean
+        ProductService productService(@LoadBalanced RestClient.Builder restClientBuilder) {
+                RestClient restClient = restClientBuilder
+                                .baseUrl("lb://PRODUCT")
+                                .build();
+                RestClientAdapter restClientAdapter = RestClientAdapter.create(restClient);
+                return HttpServiceProxyFactory
+                                .builderFor(restClientAdapter)
+                                .build()
+                                .createClient(ProductService.class);
+        }
 
-    @Bean
-    RecommendationService recommendationService(@LoadBalanced RestClient.Builder restClientBuilder) {
-        RestClient restClient = restClientBuilder
-                .baseUrl("lb://recommendation")
-                .build();
-        RestClientAdapter adapter = RestClientAdapter.create(restClient);
-        return HttpServiceProxyFactory
-                .builderFor(adapter)
-                .build()
-                .createClient(RecommendationService.class);
-    }
+        @Bean
+        RecommendationService recommendationService(@LoadBalanced RestClient.Builder restClientBuilder) {
+                RestClient restClient = restClientBuilder
+                                .baseUrl("lb://RECOMMENDATION")
+                                .build();
+                RestClientAdapter adapter = RestClientAdapter.create(restClient);
+                return HttpServiceProxyFactory
+                                .builderFor(adapter)
+                                .build()
+                                .createClient(RecommendationService.class);
+        }
 
-    @Bean
-    ReviewService reviewService(@LoadBalanced RestClient.Builder restClientBuilder) {
-        RestClient restClient = restClientBuilder
-                .baseUrl("lb://review")
-                .build();
-        RestClientAdapter restClientAdapter = RestClientAdapter.create(restClient);
-        return HttpServiceProxyFactory
-                .builderFor(restClientAdapter)
-                .build()
-                .createClient(ReviewService.class);
-    }
+        @Bean
+        ReviewService reviewService(@LoadBalanced RestClient.Builder restClientBuilder) {
+                RestClient restClient = restClientBuilder
+                                .baseUrl("lb://REVIEW")
+                                .build();
+                RestClientAdapter restClientAdapter = RestClientAdapter.create(restClient);
+                return HttpServiceProxyFactory
+                                .builderFor(restClientAdapter)
+                                .build()
+                                .createClient(ReviewService.class);
+        }
 
 }
