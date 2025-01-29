@@ -1,7 +1,7 @@
 services:
   configserver:
     container_name: configserver
-    image: soner9/configserver:v7
+    image: soner9/configserver:v8
     ports:
       - 7071:7071
     env_file:

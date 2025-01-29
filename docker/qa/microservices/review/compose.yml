@@ -21,7 +21,7 @@ services:
       - sonerapp
 
   review:
-    image: soner9/review:v7
+    image: soner9/review:v8
     container_name: review
     ports:
       - 7003:7003

@@ -20,7 +20,7 @@ services:
       - sonerapp
 
   product:
-    image: soner9/product:v7
+    image: soner9/product:v8
     container_name: product
     ports:
       - 7001:7001

@@ -1,7 +1,7 @@
 services:
   gatewayserver:
     container_name: gatewayserver
-    image: soner9/gatewayserver:v7
+    image: soner9/gatewayserver:v8
     ports:
       - 7777:7777
     deploy:
@@ -13,6 +13,7 @@ services:
     environment:
       - SPRING_CONFIG_IMPORT=optional:configserver:http://configserver:7071
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:7070/eureka/
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI=http://keycloak:9090/realms/master/protocol/openid-connect/certs
     depends_on:
       product:
         condition: service_healthy

@@ -1,6 +1,6 @@
 services:
   eurekaserver:
-    image: soner9/eurekaserver:v7
+    image: soner9/eurekaserver:v8
     container_name: eurekaserver
     ports:
       - 7070:7070

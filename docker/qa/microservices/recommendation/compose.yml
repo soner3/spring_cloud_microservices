@@ -20,7 +20,7 @@ services:
       - sonerapp
 
   recommendation:
-    image: soner9/recommendation:v7
+    image: soner9/recommendation:v8
     container_name: recommendation
     ports:
       - 7002:7002

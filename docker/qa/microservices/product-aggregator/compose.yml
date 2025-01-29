@@ -1,6 +1,6 @@
 services:
   product-aggregator:
-    image: soner9/product-aggregator:v7
+    image: soner9/product-aggregator:v8
     container_name: product-aggregator
     ports:
       - 7000:7000

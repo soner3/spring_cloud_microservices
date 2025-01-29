@@ -4,7 +4,7 @@ BASE_DIR=$(pwd)
 
 services=("product" "product-aggregator" "recommendation" "review")
 
-version=v7
+version=v8
 
 infrastructureServices=("configserver" "eurekaserver" "gatewayserver")
 
