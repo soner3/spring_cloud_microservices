@@ -39,3 +39,13 @@ services:
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
       - MYSQL_DATABASE=reviewdb
+
+  keycloak:
+    container_name: keycloak
+    image: quay.io/keycloak/keycloak:26.1.0
+    ports:
+      - 9090:8080
+    command: ["start-dev"]
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
