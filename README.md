@@ -49,4 +49,13 @@ From the project root, execute:
 
 ```bash
 ./build-image.sh
+```
+### 2. Start Compose
+
+From the project root, execute:
+
+```bash
+cd docker/prod
+docker compose up -d
+```
 
